@@ -25,6 +25,7 @@ test('works as a local HTML file offline with no external requests', async ({ pa
   const requests: string[] = []; const errors: string[] = [];
   page.on('request', request => { if (/^https?:/.test(request.url())) requests.push(request.url()); });
   page.on('pageerror', error => errors.push(error.message));
+  await page.reload();
   await sample(page);
   await expect(page.locator('#entry-count')).toHaveText('11');
   await expect(page.locator('#findings')).toContainText('case-collision');

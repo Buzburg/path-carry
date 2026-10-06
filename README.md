@@ -58,7 +58,7 @@ A warning also returns status 1, so it blocks this step until reviewed. There is
 ## Scope and limits
 
 - Browser folder selection may omit empty directories and links. It includes the selected root folder name; CLI paths are relative to the selected root. Set your prefix accordingly.
-- A path list uses one slash-separated relative path per line. Spaces are preserved, empty lines ignored, and a final `/` denotes a directory. Use folder/ZIP input for names containing newlines.
+- A path list uses one slash-separated relative path per line. Spaces are preserved, empty lines ignored, and a final `/` denotes a directory. CLI lists must be regular UTF-8 files (an initial BOM is accepted), at most 8 MB. Use folder/ZIP input for names containing newlines. Keep input files unchanged during a check.
 - The destination prefix is the length before each relative path, including its final separator. Default: 40 UTF-16 units. The legacy Windows warning uses 260 including the terminating NUL. Long-path-aware software may accept longer paths.
 - ZIP checks support ZIP64 and Unicode names through [zip.js](https://github.com/gildas-lormeau/zip.js). Payloads, local headers, CRCs and link targets are not validated. Visible names in encrypted entries can be checked; encrypted central directories cannot. Ambiguous/nonstandard metadata is rejected. Split archives are unsupported.
 - Maximum 20,000 entries, 4,096 characters per path, 2 million input path characters, 100,000 expanded nodes, 8 million expanded path characters and 50,000 findings. ZIP reads are bounded to 16 MiB per read and 32 MiB total. Oversized checks fail explicitly instead of returning a partial clean report.

@@ -3,7 +3,7 @@
 Local verification: October 6, 2026. Windows, Node 25.9.0, Playwright 1.58.2 with Chromium and Firefox. The release workflow independently repeats the checks on Ubuntu with Node 22.
 
 - Strict TypeScript check passed.
-- 65 unit/integration checks passed: reserved names, unsafe paths, ancestor collisions, Unicode, expanded-node/finding limits, 20,000-entry checks, real ZIP/ZIP64 metadata, corrupt archives, symlinks and the bundled CLI's exit codes/output.
+- 69 unit/integration checks cover reserved names, unsafe paths, ancestor collisions, Unicode, expanded-node/finding limits, 20,000-entry checks, real ZIP/ZIP64 metadata, corrupt archives, symlinks, bounded UTF-8 manifest reads and the bundled CLI's exit codes/output.
 - 34 browser checks passed: offline file:// use, no runtime HTTP requests, real folder/ZIP input, corrupt ZIP rejection, filtering, complete downloads, safe report rendering, invalidation of stale results, clear/cancel, keyboard access, 20,000 entries, and 320/768/1440-pixel layouts.
 - Automated axe scans found no violations on the initial and sample-results screens in either browser. This is not a full accessibility certification.
 - Desktop and narrow-screen screenshots were inspected for layout and legibility.
@@ -16,6 +16,7 @@ Local verification: October 6, 2026. Windows, Node 25.9.0, Playwright 1.58.2 wit
 - Editing the path list or destination prefix invalidates a previous result, including in-flight work. Cancellation terminates the worker; failed checks discard old reports.
 - Filenames are text nodes in the app, HTML-escaped in standalone reports and JSON-escaped in terminal text output. Exports include full findings even when the display is filtered or paginated.
 - MIT and third-party BSD notices are embedded in both standalone artifacts, as well as included in the release files.
+- CLI manifest reads reject nonregular files, malformed UTF-8 and oversized input; reads remain bounded if a regular file grows after its size check. Keep all CLI sources stable during a check.
 
 ## Limits of the evidence
 

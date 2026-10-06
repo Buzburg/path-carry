@@ -1,6 +1,6 @@
 import { openAsBlob } from 'node:fs';
-import { readFile, stat } from 'node:fs/promises';
-import { audit, LIMITS, parseManifest } from './audit';
+import { audit } from './audit';
+import { readManifest } from './manifest';
 import { scanFolder } from './scan';
 import { readZip } from './zip';
 import { htmlReport } from './report';
@@ -46,10 +46,7 @@ async function main(args: string[]): Promise<void> {
   if (!['text', 'json', 'html'].includes(format)) throw new Error('Format must be text, json or html.');
   if (!Number.isInteger(prefix) || prefix < 0 || prefix > 32000) throw new Error('Prefix must be a whole number from 0 to 32,000.');
   const input = mode === 'zip' ? await readZip(await openAsBlob(source)) : mode === 'list'
-    ? await (async () => {
-      if ((await stat(source)).size > LIMITS.characters * 4) throw new Error('Path list file exceeds 8 MB.');
-      return { entries: parseManifest(await readFile(source, 'utf8')), notes: ['Path manifest: blank lines ignored; directory paths end with /.'] };
-    })()
+    ? { entries: await readManifest(source), notes: ['UTF-8 path manifest: blank lines ignored; directory paths end with /.'] }
     : { entries: await scanFolder(source), notes: ['CLI folder scan: includes empty directories. Detected links were not followed. Keep the folder unchanged while scanning.'] };
   const report = audit(input.entries, prefix, input.notes);
   const output = format === 'json' ? JSON.stringify(report, null, 2) : format === 'html' ? htmlReport(report) : [
