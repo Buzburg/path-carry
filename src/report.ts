@@ -1,0 +1,8 @@
+import type { AuditReport } from './audit';
+export function escapeHtml(value: string): string {
+  return value.replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]!));
+}
+export function htmlReport(report: AuditReport): string {
+  const esc = escapeHtml;
+  return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>PathCarry report</title><style>body{font:16px/1.6 system-ui,sans-serif;max-width:980px;margin:40px auto;padding:0 24px;color:#19342e;background:#fafaf5}h1{font-size:40px}article{border-top:1px solid #bbc8bd;padding:20px 0}code{white-space:pre-wrap;overflow-wrap:anywhere;unicode-bidi:plaintext}small{font-weight:bold}li{margin:8px 0}@media print{article{break-inside:avoid}}</style></head><body><p>PATHCARRY / OFFLINE PREFLIGHT</p><h1>${report.errors || report.warnings ? 'Review before the handoff.' : 'No filename issues found.'}</h1><p>${report.entries} entries · ${report.errors} errors · ${report.warnings} warnings</p><p>Destination prefix: ${report.destinationPrefix} UTF-16 units, including its final separator. Filenames below may contain private information.</p><ul>${report.notes.map(note => `<li>${esc(note)}</li>`).join('')}</ul>${report.findings.map(item => `<article><small>${esc(item.severity.toUpperCase())} / ${esc(item.code)}</small><h2><code>${esc(item.path)}</code></h2>${item.related === undefined ? '' : `<p>Also: <code>${esc(item.related)}</code></p>`}<p>${esc(item.message)}</p></article>`).join('')}</body></html>`;
+}
