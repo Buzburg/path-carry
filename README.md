@@ -1,6 +1,6 @@
-# ↗ PathCarry
+# PathCarry ↗
 
-**Same files. Fewer surprises.**
+**Works on my machine. Will the filenames travel?**
 
 Check filenames before a folder or ZIP changes hands. Catch names that Windows rejects, directories that merge when case is ignored, Unicode collisions and paths that become too long. Offline. Read-only. No account.
 
@@ -84,3 +84,5 @@ The HTML and CLI embed license notices and are self-contained. Verify downloaded
 Filename portability is an existing problem with existing solutions. PathCarry packages a focused read-only check as one offline HTML file and a CLI using the same engine. Its emphasis is explaining **both file collisions and parent-directory merges** before a handoff. See [research and alternatives](docs/RESEARCH.md), [design](docs/DESIGN.md), [verification](docs/VERIFICATION.md), and [security boundaries](SECURITY.md).
 
 MIT licensed. Includes zip.js under BSD-3-Clause. Built by [Buzburg](https://github.com/Buzburg).
+
+See [release verification](RELEASE_VERIFICATION.md) for the release checks.
