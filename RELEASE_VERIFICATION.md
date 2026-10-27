@@ -1,4 +1,4 @@
-# Release verification — path-carry v0.1.1
+# Release verification — path-carry v0.1.2
 
 Verified locally on October 27, 2026, Linux x86-64. Toolchains: Python 3.14.8, Rust 1.98.1, Node.js 26.8.1, Go 1.27.1 and Mojo 1.1.0, as applicable. CI covers additional versions/platforms where configured; consult the workflow run for the release commit rather than an older green run.
 
@@ -18,6 +18,8 @@ npm run test:browser
 The Python build command requires the `build` package; Unity checks also require `mypy` and `ruff`. Native Mojo experiments are optional and require Mojo 1.1.0. CLI acceptance used disposable fixtures and no real customer data.
 
 ## Release changes
+
+Make tag publication idempotent: an existing release is preserved after the workflow verifies the tag build and browser behavior.
 
 Refresh the product story and verify the downloadable app and CLI across both browser engines.
 

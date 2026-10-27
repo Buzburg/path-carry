@@ -1,6 +1,6 @@
 {
   "name": "path-carry",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "type": "module",
   "description": "Works on my machine. Will the filenames travel? Check folders and ZIPs for cross-platform naming trouble\u2014offline.",

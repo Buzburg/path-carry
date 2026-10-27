@@ -25,4 +25,9 @@ jobs:
       - name: Publish verified downloads
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" dist/path-carry.html dist/path-carry.mjs dist/THIRD-PARTY-NOTICES.txt dist/SHA256SUMS.txt --verify-tag --title "PathCarry $GITHUB_REF_NAME" --notes-file docs/RELEASE.md
+        run: |
+          if gh release view "$GITHUB_REF_NAME" --json tagName >/dev/null 2>&1; then
+            echo "Release already exists; tag build and browser verification passed."
+          else
+            gh release create "$GITHUB_REF_NAME" dist/path-carry.html dist/path-carry.mjs dist/THIRD-PARTY-NOTICES.txt dist/SHA256SUMS.txt --verify-tag --title "PathCarry $GITHUB_REF_NAME" --notes-file docs/RELEASE.md
+          fi
